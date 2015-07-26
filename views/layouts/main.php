@@ -26,7 +26,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => 'HOSxP Report รพ.ศรีวิไล จ.บึงกาฬ',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,13 +36,13 @@ AppAsset::register($this);
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
                     Yii::$app->user->isGuest ?
-                    ['label' => 'Sign in', 'url' => ['/user/security/login']] :
-                    ['label' => 'Account(' . Yii::$app->user->identity->username . ')', 'items'=>[
-                    ['label' => 'Profile', 'url' => ['/user/settings/profile']],
-                    ['label' => 'Account', 'url' => ['/user/settings/account']],
+                    ['label' => 'เข้าสู่ระบบ', 'url' => ['/user/security/login']] :
+                    ['label' => 'ผู้ใช้งาน(' . Yii::$app->user->identity->username . ')', 'items'=>[
+//                    ['label' => 'Profile', 'url' => ['/user/settings/profile']],
+//                    ['label' => 'ผู้ใช้งาน', 'url' => ['/user/settings/account']],
                     ['label' => 'Logout', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
                          ]],
-                    ['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
+                    //['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
                                 ],
                             ]);
             NavBar::end();
@@ -58,7 +58,7 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+            <p class="pull-left">&copy; BY IT <?= date('Y') ?></p>
             <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
     </footer>
