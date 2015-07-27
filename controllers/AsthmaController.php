@@ -3,11 +3,45 @@ namespace app\controllers;
 use yii;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\components\AccessRule;
+use app\models\User;
 
 class AsthmaController extends Controller
 {
 	public $enableCsrfValidation = false;
+        public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'only'=> ['index','Asthma1','Asthma2','Asthma3'],
+                'ruleConfig'=>[
+                    'class'=>AccessRule::className()
+                ],
+                'rules'=>[
+                    [
+                        'actions'=>['index','Asthma1','Asthma2','Asthma3'],
+                        'allow'=> true,
+                        'roles'=>[
+                            User::ROLE_USER,
+                            User::ROLE_MODERATOR,
+                            User::ROLE_ADMIN
 
+                        ]
+                    ],                                     
+                ]
+            ]
+        ];
+    }  
 	public function actionAsthma1() {
         
         $date1 = "";
