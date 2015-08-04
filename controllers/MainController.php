@@ -36,7 +36,7 @@ class MainController extends Controller
                         'actions'=>['index'],
                         'allow'=> true,
                         'roles'=>[
-                            User::ROLE_USER,
+                           // User::ROLE_USER,
                             User::ROLE_MODERATOR,
                             User::ROLE_ADMIN
 

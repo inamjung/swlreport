@@ -8,7 +8,9 @@ use yii\helpers\Url;
 
     <div class="jumbotron">
     
-    <p><a class="btn btn-lg btn-success" href="<?php echo Url::to(['main/index']); ?>"> คลิก! เข้าสู่ HOSxP Report (Login ก่อนใช้งาน) </a></p>
+    <p><a class="btn btn-lg btn-success" href="<?php echo Url::to(['main/index']); ?>"> 
+            คลิก! เข้าสู่ HOSxP REPORT & STOKE-MI</p><p>
+            (Login ก่อนใช้งาน) </a></p>
     </div>
 
     <div class="body-content">

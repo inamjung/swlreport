@@ -36,7 +36,7 @@ class HtController extends Controller
                         'actions'=>['index','ht0','ht1','htall','htckd'],
                         'allow'=> true,
                         'roles'=>[
-                            User::ROLE_USER,
+                            //User::ROLE_USER,
                             User::ROLE_MODERATOR,
                             User::ROLE_ADMIN
 

@@ -37,7 +37,7 @@ class CkdController extends Controller
                         'actions'=>['index','ckd0','ckd1','ckdht','ckdhtdm'],
                         'allow'=> true,
                         'roles'=>[
-                            User::ROLE_USER,
+                           // User::ROLE_USER,
                             User::ROLE_MODERATOR,
                             User::ROLE_ADMIN
 

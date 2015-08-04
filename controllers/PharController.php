@@ -36,7 +36,7 @@ class PharController extends Controller
                         'actions'=>['index','diarrhea','uri'],
                         'allow'=> true,
                         'roles'=>[
-                            User::ROLE_USER,
+                            //User::ROLE_USER,
                             User::ROLE_MODERATOR,
                             User::ROLE_ADMIN
 

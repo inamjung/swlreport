@@ -92,6 +92,7 @@ if (isset($dataProvider))
 <?php
 echo \kartik\grid\GridView::widget([
     'dataProvider' => $dataProvider,
+    'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => '-'],
     //'filterModel' => $searchModel,
     'responsive' => TRUE,
     'hover' => true,

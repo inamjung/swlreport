@@ -32,7 +32,7 @@ class AsthmaController extends Controller
                         'actions'=>['index','Asthma1','Asthma2','Asthma3'],
                         'allow'=> true,
                         'roles'=>[
-                            User::ROLE_USER,
+                            //User::ROLE_USER,
                             User::ROLE_MODERATOR,
                             User::ROLE_ADMIN
 

@@ -37,7 +37,7 @@ class NcdController extends Controller
                         'actions'=>['index','dm0','dm1','dmht1','dmhtckd','indexdm'],
                         'allow'=> true,
                         'roles'=>[
-                            User::ROLE_USER,
+                            //User::ROLE_USER,
                             User::ROLE_MODERATOR,
                             User::ROLE_ADMIN
 

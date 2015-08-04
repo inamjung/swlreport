@@ -36,7 +36,7 @@ class CvdriskController extends Controller
                         'actions'=>['index','cvdrisk0','cvdrisk01'],
                         'allow'=> true,
                         'roles'=>[
-                            User::ROLE_USER,
+                            //User::ROLE_USER,
                             User::ROLE_MODERATOR,
                             User::ROLE_ADMIN
 
