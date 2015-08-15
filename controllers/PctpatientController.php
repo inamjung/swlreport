@@ -21,12 +21,15 @@ use yii\helpers\Url;
 use yii\filters\AccessControl;
 use app\components\AccessRule;
 use app\models\User;
+use yii\data\ArrayDataProvider;
+
 
 /**
  * PctpatientController implements the CRUD actions for Pctpatient model.
  */
 class PctpatientController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
@@ -83,7 +86,28 @@ class PctpatientController extends Controller
      */
     public function actionView($id)
     {
+        $sql = "SELECT id,hn,name,main_pdx,latitude,longitude FROM pctpatient WHERE id='$id' ";
+ 		$connection = Yii::$app->db;
+ 		$data = $connection->createCommand($sql)->queryAll();
+
+         for($i=0;$i<sizeof($data);$i++){
+             $name[] = $data[$i]['name'];
+             $main_pdx[] = $data[$i]['main_pdx'];
+             $latitude[] = $data[$i]['latitude']*1;
+             $longitude[] = $data[$i]['longitude']*1;
+         }
+
+ 		$dataProvider = new ArrayDataProvider([
+ 				'allModels'=>$data,
+                    
+ 				// 'sort'=>['attributes'=>['yy','mm','cnt','sumadj','cmi','los','los_per_case']],
+ 			]);
+        
+        
+        
         return $this->render('view', [
+            'dataProvider'=>$dataProvider,
+             'name'=>$name,'main_pdx'=>$main_pdx,'latitude'=>$latitude,'longitude'=>$longitude,
             'model' => $this->findModel($id),
         ]);
     }
@@ -330,4 +354,27 @@ class PctpatientController extends Controller
         $patients = Pctpatient::findOne($ptnameID);
         echo Json::encode($patients);
     }
+    
+    public function actionReport3(){
+ 		$sql = 'SELECT name,main_pdx,latitude,longitude FROM pctpatient GROUP BY id LIMIT 100';
+ 		$connection = Yii::$app->db;
+ 		$data = $connection->createCommand($sql)->queryAll();
+
+         for($i=0;$i<sizeof($data);$i++){
+             $name[] = $data[$i]['name'];
+             $main_pdx[] = $data[$i]['main_pdx'];
+             $latitude[] = $data[$i]['latitude']*1;
+             $longitude[] = $data[$i]['longitude']*1;
+         }
+
+ 		$dataProvider = new ArrayDataProvider([
+ 				'allModels'=>$data,
+ 				// 'sort'=>['attributes'=>['yy','mm','cnt','sumadj','cmi','los','los_per_case']],
+ 			]);
+
+ 		return $this->render('report3',[
+ 			'dataProvider'=>$dataProvider,
+             'name'=>$name,'main_pdx'=>$main_pdx,'latitude'=>$latitude,'longitude'=>$longitude
+ 		]);
+ 	}
 }

@@ -51,9 +51,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'gis') ?>
 
-    <?php // echo $form->field($model, 'latijod') ?>
+    <?php // echo $form->field($model, 'latitude') ?>
 
-    <?php // echo $form->field($model, 'longtijod') ?>
+    <?php // echo $form->field($model, 'longitude') ?>
 
     <?php // echo $form->field($model, 'avatar1') ?>
 

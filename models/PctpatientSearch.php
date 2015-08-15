@@ -20,7 +20,7 @@ class PctpatientSearch extends Pctpatient
     {
         return [
             [['id','age'], 'integer'],
-            [['ptype','regdate','drug', 'moo','pname', 'sex','pstatus','status', 'fullName','name', 'birthday', 'cid', 'addrpart', 'moopart', 'tmbpart_id', 'amppart_id', 'chwpart_id', 'tel', 'hospcode', 'hn', 'main_pdx', 'pdx1', 'gis', 'latijod', 'longtijod', 'avatar1', 'username', 'createdate', 'updatedate', 'docs', 'covenant', 'ref'], 'safe'],
+            [['ptype','regdate','drug', 'moo','pname', 'sex','pstatus','status', 'fullName','name', 'birthday', 'cid', 'addrpart', 'moopart', 'tmbpart_id', 'amppart_id', 'chwpart_id', 'tel', 'hospcode', 'hn', 'main_pdx', 'pdx1', 'gis', 'latitude', 'longitude', 'avatar1', 'username', 'createdate', 'updatedate', 'docs', 'covenant', 'ref'], 'safe'],
         ];
     }
 
@@ -47,8 +47,14 @@ class PctpatientSearch extends Pctpatient
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination'=>[
-                'pageSize'=>10
+                'pageSize'=>15
             ],
+            'sort' => [                
+            'defaultOrder'=>[
+            'id'=> 'SORT_DESC',
+                    ]
+                
+               ],
         ]);
 
         $this->load($params);
@@ -90,8 +96,8 @@ class PctpatientSearch extends Pctpatient
             ->andFilterWhere(['like', 'main_pdx', $this->main_pdx])
             ->andFilterWhere(['like', 'pdx1', $this->pdx1])           
             ->andFilterWhere(['like', 'gis', $this->gis])
-            ->andFilterWhere(['like', 'latijod', $this->latijod])
-            ->andFilterWhere(['like', 'longtijod', $this->longtijod])
+            ->andFilterWhere(['like', 'latitude', $this->latitude])
+            ->andFilterWhere(['like', 'longitude', $this->longitude])
             ->andFilterWhere(['like', 'avatar1', $this->avatar1])
             ->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'docs', $this->docs])

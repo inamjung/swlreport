@@ -18,6 +18,7 @@ use app\models\User;
 class PctmoobanController extends Controller
 {
     public function behaviors()
+            
     {
         return [
             'verbs' => [
@@ -86,7 +87,7 @@ class PctmoobanController extends Controller
         $model = new Pctmooban();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['pctmooban/index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

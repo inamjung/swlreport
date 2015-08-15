@@ -22,11 +22,12 @@ use kartik\widgets\DepDrop;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     <div class="panel panel-primary">
-        <div class="panel-heading"><h4><i class="glyphicon glyphicon-log-in"></i> บันทึกข้อมูลผู้ป่วย Stoke & Mi</h4></div>
+        <div class="panel-heading"><h4><i class="glyphicon glyphicon-log-in"></i> บันทึกข้อมูลผู้ป่วย Stroke & Mi</h4></div>
     <div class="panel-body">
     <div class="row">
         <?= $form->field($model, 'ref')->hiddenInput(['maxlength' => 50])->label(false); ?>
-        <div class="col-sm-offset-3 col-sm-3">            
+        <div class="col-sm-offset-1 col-sm-2">            
+            
             <?=
             $form->field($model, 'pname')->widget(Select2::className(), ['data' => 
                         ArrayHelper::map(app\models\PctPname::find()->all(), 'namep', 'namep'),
@@ -39,45 +40,32 @@ use kartik\widgets\DepDrop;
                     ]);
             ?>
         </div>
-        <div class="col-xs-3 col-sm-3 col-md-5">
+        <div class="col-xs-3 col-sm-3 col-md-4">
              <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>        
-           
-</div>
-    <div class="row">
-        <div class="col-sm-offset-3 col-sm-3"> 
+        <div class="col-xs-3 col-sm-3 col-md-3"> 
              <?= $form->field($model, 'sex')->label('เพศ')->inline()->radioList(\app\models\PctPatient::itemAlias('sex')) ?>
+        </div>   
+</div>
+    <div class="row">        
+        <div class="col-sm-offset-1 col-sm-2">
+             <?= $form->field($model, 'age')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-xs-3 col-sm-3 col-md-2"> 
-                <?=$form->field($model,'birthday')->widget(\yii\jui\DatePicker::className(),[  
-                    'language' => 'th',
-                    'dateFormat' => 'yyyy-MM-dd',
-                    'clientOptions' => [
-                        'changeMonth' => true,
-                        'changeYear' => true,
-                        'z-index'=>1
-                     ],
-                     
-                     'options'=>['class'=>'form-control'
-                     ],
-                ]);
-            ?>
-        </div> 
+        
         <div class="col-xs-3 col-sm-3 col-md-3">
             <?= $form->field($model, 'cid')->label('เลขบัตร ปชช.')->widget(\yii\widgets\MaskedInput::classname(), [
              'mask' => '9-9999-99999-99-9',
                 ]) ?> 
-        </div>
-          
-    </div>
-    <div class="row">
-         <div class="col-sm-offset-1 col-sm-1"> 
+        </div> 
+        <div class="col-xs-3 col-sm-3 col-md-2"> 
             <?= $form->field($model, 'addrpart')->label('บ้านเลขที่')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-xs-3 col-sm-3 col-md-1"> 
+        <div class="col-xs-3 col-sm-3 col-md-2"> 
             <?= $form->field($model, 'moo')->label('หมู่')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-2">            
+        </div>        
+    </div>
+    <div class="row">         
+        <div class="col-sm-offset-1 col-sm-2">            
             <?=
             $form->field($model, 'tmbpart_id')->widget(Select2::className(), ['data' => 
                         ArrayHelper::map(app\models\Pctaddress::find()->all(), 'tmbpart', 'name'),
@@ -111,16 +99,25 @@ use kartik\widgets\DepDrop;
                 ]) ?>  
         </div>
       </div>
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-3">
+            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>    
+        
         <hr>
     <div class="row">
 </div>
     <div class="row">
         <div class="col-sm-offset-1 col-sm-2"> 
-            <?= $form->field($model, 'hn')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'hn',['labelOptions'=>['style'=>'color:blue;']])->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-4">            
             <?=
-            $form->field($model, 'main_pdx')->widget(Select2::className(), ['data' => 
+            $form->field($model, 'main_pdx',['labelOptions'=>['style'=>'color:blue;']])->widget(Select2::className(), ['data' => 
                         ArrayHelper::map(app\models\PctDisease::find()->all(), 'code',
                         function($model,$defaultValue){
                                 return $model->code.'-'.$model->name;
@@ -136,7 +133,7 @@ use kartik\widgets\DepDrop;
         </div>
         <div class="col-xs-3 col-sm-3 col-md-4"> 
             <?=
-            $form->field($model, 'drug')->label('ยาที่ใช้')->widget(Select2::className(), ['data' => 
+            $form->field($model, 'drug',['labelOptions'=>['style'=>'color:blue;']])->label('ยาที่ใช้')->widget(Select2::className(), ['data' => 
                         ArrayHelper::map(app\models\Pctdrug::find()->all(), 'drug', 'drug'),
                         'options' => [
                         'placeholder' => '<--ยาที่ใช้-->'],                        
@@ -151,7 +148,7 @@ use kartik\widgets\DepDrop;
             <div class="row"> 
             <div class="col-sm-offset-1 col-sm-2">           
             <?=
-            $form->field($model, 'hospcode')->label('หน่วยบริการ')->widget(Select2::className(), ['data' => 
+            $form->field($model, 'hospcode',['labelOptions'=>['style'=>'color:blue;']])->label('หน่วยบริการ')->widget(Select2::className(), ['data' => 
                         ArrayHelper::map(app\models\PctHospcode::find()->all(), 'hospcode', 'name'),
                         'options' => [
                         'placeholder' => '<--รพ.สต-->'],                        
@@ -163,19 +160,19 @@ use kartik\widgets\DepDrop;
             ?>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-4">
-             <?= $form->field($model, 'ptype')->label('โรคประจำตัว')->inline()->radioList(\app\models\PctPatient::itemAlias('ptype')) ?>
+             <?= $form->field($model, 'ptype',['labelOptions'=>['style'=>'color:blue;']])->label('โรคประจำตัว')->inline()->radioList(\app\models\PctPatient::itemAlias('ptype')) ?>
         </div>        
         <div class="col-xs-3 col-sm-3 col-md-5">
-             <?= $form->field($model, 'status')->label('สถานะ')->inline()->radioList(\app\models\PctPatient::itemAlias('status')) ?>
+             <?= $form->field($model, 'status',['labelOptions'=>['style'=>'color:blue;']])->label('สถานะ')->inline()->radioList(\app\models\PctPatient::itemAlias('status')) ?>
         </div>  
-            </div>  <hr>  
+            </div>    
             
     <div class="row">
         <div class="col-sm-offset-1 col-sm-10">
-         <?= $form->field($model, 'pstatus')->label('สถานะการรักษา')->inline()->radioList(\app\models\PctPatient::itemAlias('pstatus')) ?>   
+         <?= $form->field($model, 'pstatus',['labelOptions'=>['style'=>'color:blue;']])->label('สถานะการรักษา')->inline()->radioList(\app\models\PctPatient::itemAlias('pstatus')) ?>   
         </div>         
     </div> 
-            
+    <hr>        
         <div class="col-sm-offset-1 col-sm-10">
          <div class="form-group field-upload_files">
                 <label class="control-label" for="upload_files[]"><i class="glyphicon glyphicon-camera"></i> ภาพถ่ายเกี่ยวกับผู้ป่วย (อับโหลดได้ไม่เกิน3ภาพ) </label>

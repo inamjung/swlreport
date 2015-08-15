@@ -79,11 +79,11 @@ AppAsset::register($this);
                                 
                         //['label' => 'Logout', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
                       
-                         ]],
+                        ]],
                     
                     Yii::$app->user->isGuest ?
                     ['label' => 'เข้าสู่ระบบ', 'url' => ['/user/security/login']] :
-                    ['label' => 'ผู้ใช้งาน(' . Yii::$app->user->identity->username . ')', 'items'=>[
+                    ['label' => 'ผู้ใช้งาน(' . Yii::$app->user->identity->email . ')', 'items'=>[
 //                    ['label' => 'Profile', 'url' => ['/user/settings/profile']],
 //                    ['label' => 'ผู้ใช้งาน', 'url' => ['/user/settings/account']],
                     ['label' => 'Logout', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],

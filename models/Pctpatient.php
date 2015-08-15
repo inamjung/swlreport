@@ -35,8 +35,8 @@ use yii\helpers\Url;
  * @property string $moo
  * @property string $drug
  * @property string $gis
- * @property string $latijod
- * @property string $longtijod
+ * @property string $latitude
+ * @property string $longitude
  * @property string $avatar1
  * @property string $status
  * @property string $username
@@ -97,7 +97,7 @@ class Pctpatient extends \yii\db\ActiveRecord
             [['age'], 'integer'],
             [['birthday', 'createdate', 'updatedate','regdate'], 'safe'],
             [['sex','status','pname', 'addrpart', 'tel'], 'string', 'max' => 20],
-            [['pstatus','drug','name', 'gis', 'latijod', 'longtijod', 'avatar1', 'username', 'docs', 'covenant'], 'string', 'max' => 255],
+            [['pstatus','drug','name', 'gis', 'latitude', 'longitude', 'avatar1', 'username', 'docs', 'covenant'], 'string', 'max' => 255],
             [['cid'], 'string', 'max' => 18],
             [['moo','amppart_id', 'chwpart_id'], 'string', 'max' => 2],
             [['hospcode'], 'string', 'max' => 7],
@@ -140,8 +140,8 @@ class Pctpatient extends \yii\db\ActiveRecord
             'gis' => 'Gis',
             'drug' => 'ยาที่ใช้',
             'moo' => 'หมู่ที่',
-            'latijod' => 'Latijod',
-            'longtijod' => 'Longtijod',
+            'latitude' => 'Latijod',
+            'longitude' => 'Longtijod',
             'avatar1' => 'รูปประจำตัว',
             'username' => 'Username',
             'createdate' => 'Createdate',
