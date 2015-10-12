@@ -465,4 +465,127 @@ WHERE cr>0  AND cr1 >0 ";
                    
         ]);
     }
+    
+    public function actionCkdall() {
+        
+        $date1 = "";
+        $date2 = "";        
+        if (Yii::$app->request->isPost) {
+            $date1 = $_POST['date1'];
+            $date2 = $_POST['date2'];           
+            }
+        
+        $sql = "
+        SELECT * 
+        FROM (select CONCAT(p.pname,p.fname,space(3),p.lname) as ptname ,p.sex,p.hn,p.addrpart,p.moopart, p.tmbpart,p.amppart,p.chwpart, 
+        CONCAT(p.chwpart,p.amppart ) as ad,p.informaddr as ad1,v.age_y, s.smoking_type_name as smoke,d.drinking_type_name as drink,
+
+        (select lo14.lab_order_result from lab_order lo14 
+        left outer join lab_head lh14 on lh14.lab_order_number=lo14.lab_order_number 
+        where lo14.lab_items_code='3' and lh14.hn=o.hn 
+        and lh14.order_date between '$date1' AND '$date2'   
+        order by lh14.report_date desc,lh14.report_time desc limit 0,1) as hbg ,
+
+        (select lo24.lab_order_result from lab_order lo24 
+        left outer join lab_head lh24 on lh24.lab_order_number=lo24.lab_order_number 
+        where lo24.lab_items_code='82' and lh24.hn=o.hn 
+        and lh24.order_date between '$date1' AND '$date2'    
+        order by lh24.report_date desc,lh24.report_time desc limit 0,1) as tco3 ,
+
+        (select lo3.lab_order_result from lab_order lo3 
+        left outer join lab_head lh3 on lh3.lab_order_number=lo3.lab_order_number 
+        where lo3.lab_items_code='257' and lh3.hn=o.hn 
+        and lh3.order_date between '$date1' AND '$date2'  
+        order by lh3.report_date desc,lh3.report_time desc limit 0,1) as micro_albumin1 ,
+
+        (select lo4.lab_order_result from lab_order lo4 
+        left outer join lab_head lh4 on lh4.lab_order_number=lo4.lab_order_number 
+        where lo4.lab_items_code='236' and lh4.hn=o.hn 
+        and lh4.order_date between '$date1' AND '$date2'   
+        order by lh4.report_date desc,lh4.report_time desc limit 0,1) as HbA1c1 ,
+
+        (select lo5.lab_order_result from lab_order lo5 
+        left outer join lab_head lh5 on lh5.lab_order_number=lo5.lab_order_number 
+        where lo5.lab_items_code='92' and lh5.hn=o.hn   
+        and lh5.order_date between '$date1' AND '$date2' 
+        order by lh5.report_date desc,lh5.report_time desc limit 0,1) as LDL1 ,
+
+        (select lo6.lab_order_result from lab_order lo6 
+        left outer join lab_head lh6 on lh6.lab_order_number=lo6.lab_order_number 
+        where lo6.lab_items_code='81' and lh6.hn=o.hn   
+        and lh6.order_date between '$date1' AND '$date2' 
+        order by lh6.report_date desc,lh6.report_time desc limit 0,1) as K1 ,
+
+        (select lo7.lab_order_result from lab_order lo7 
+        left outer join lab_head lh7 on lh7.lab_order_number=lo7.lab_order_number 
+        where lo7.lab_items_code='82' and lh7.hn=o.hn 
+        and lh7.order_date between '$date1' AND '$date2'   
+        order by lh7.report_date desc,lh7.report_time desc limit 0,1) as bicarb1 ,
+
+        (select lh.order_date from lab_order lo
+        left outer join lab_head lh on lh.lab_order_number=lo.lab_order_number
+        where lo.lab_items_code='78' and lh.hn=o.hn
+        and lh.order_date between '$date1' AND '$date2' 
+        order by lh.report_date desc,lh.report_time desc limit 0,1) as Cr_date,
+
+        (select lo.lab_order_result from lab_order lo 
+        left outer join lab_head lh on lh.lab_order_number=lo.lab_order_number 
+        where lo.lab_items_code='78' and lh.hn=o.hn   
+        and lh.order_date between '$date1' AND '$date2' 
+        order by lh.report_date desc,lh.report_time desc limit 0,1) as cr ,
+
+        (select lh1.order_date from lab_order lo1
+        left outer join lab_head lh1 on lh1.lab_order_number=lo1.lab_order_number
+        where lo1.lab_items_code='78' and lh1.hn=o.hn
+        and lh1.order_date between '$date1' AND '$date2' 
+        order by lh1.report_date desc,lh1.report_time desc limit 1,1) as Cr_date1,
+
+        (select lo1.lab_order_result from lab_order lo1
+        left outer join lab_head lh1  on lh1.lab_order_number=lo1.lab_order_number 
+        where lo1.lab_items_code='78' and lh1.hn=o.hn    
+        and lh1.order_date between '$date1' AND '$date2' 
+        order by lh1.report_date desc,lh1.report_time desc limit 1,1) as cr1,
+
+        (select round((186*exp(-1.154*ln(lo.lab_order_result))*exp(-0.203*ln(v.age_y))*if(p.sex=1,1,0.742) ),2) from lab_order lo
+        left outer join lab_head lh on lh.lab_order_number=lo.lab_order_number
+        where lo.lab_items_code='78' and lh.hn=o.hn
+        and lh.order_date between '$date1' AND '$date2' 
+        order by lh.report_date desc,lh.report_time desc limit 0,1) as GFR,
+
+        (select round((186*exp(-1.154*ln(lo.lab_order_result))*exp(-0.203*ln(v.age_y))*if(p.sex=1,1,0.742) ),2) from lab_order lo
+        left outer join lab_head lh on lh.lab_order_number=lo.lab_order_number
+        where lo.lab_items_code='78' and lh.hn=o.hn
+        and lh.order_date between '$date1' AND '$date2'  
+        order by lh.report_date desc,lh.report_time desc limit 1,1) as GFR1
+
+        FROM opdscreen o 
+        left outer join vn_stat v on v.vn=o.vn
+        LEFT OUTER JOIN patient p ON p.hn=o.hn 
+        LEFT JOIN smoking_type s on s.smoking_type_id=o.smoking_type_id
+        LEFT JOIN drinking_type d on d.drinking_type_id=o.drinking_type_id
+        WHERE o.hn in (SELECT hn FROM clinicmember WHERE clinic ='024' AND clinic_member_status_id in (3,11))
+        and o.vstdate between '$date1' AND '$date2'
+        GROUP BY o.hn order by GFR desc) as ttemp  
+        WHERE cr>0  AND cr1 >0
+        ";
+        
+        try {
+            $rawData = \Yii::$app->db2->createCommand($sql)->queryAll();
+        } catch (\yii\db\Exception $e) {
+            throw new \yii\web\ConflictHttpException('sql error');
+        }
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            //'key' => 'hoscode',
+           
+            'allModels' => $rawData,
+            'pagination' =>FALSE
+        ]);
+        return $this->render('ckdall', [
+                    'dataProvider' => $dataProvider,                    
+                    'sql' => $sql,
+                    'rawData'=>$rawData,
+                    'date1' => $date1,
+                    'date2' => $date2,                      
+        ]);
+    }
 }
