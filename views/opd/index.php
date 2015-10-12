@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][]=$this->title;
 		  <a href="#" class="list-group-item active">
 		    งานบริการ
 		  </a>
-		  <a href="#" class="list-group-item">ระยะเวลารอคอย</a>
+		  <a href="<?php echo Url::to(['opd/waitnolabx']); ?>" class="list-group-item">1) ระยะเวลารอคอย OPD ในเวลาราชการ ไม่มีLab/Xray</a>
 		 
 		</div>
 	</div>  

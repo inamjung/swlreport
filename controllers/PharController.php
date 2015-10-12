@@ -79,7 +79,8 @@ class PharController extends Controller
         ]);
         return $this->render('index',[
             'dataProvider'=>$dataProvider,
-            'total'=>$total,'ned'=>$ned,'edtotal'=>$edtotal,'ed'=>$ed,'edttm'=>$edttm,'per_ned'=>$per_ned,'per_ed'=>$per_ed
+            'total'=>$total,'ned'=>$ned,'edtotal'=>$edtotal,'ed'=>$ed,
+            'edttm'=>$edttm,'per_ned'=>$per_ned,'per_ed'=>$per_ed
         ]);
     }
     public function actionUri(){
@@ -91,8 +92,8 @@ class PharController extends Controller
         }
         
         $sql = "select distinct(o.doctor) as doctor ,d1.`name` as doc 
-,COUNT( case when v.vn  then v.vn=o.vn else null end)as total
-,COUNT( case when d.antibiotic='Y'  then v.vn=o.vn else null end)as atb
+    ,COUNT( case when v.vn  then v.vn=o.vn else null end)as total
+    ,COUNT( case when d.antibiotic='Y'  then v.vn=o.vn else null end)as atb
       from ovstdiag o 
 			JOIN doctor d1 on d1.`code`=o.doctor
       join vn_stat v on v.vn=o.vn 
@@ -154,6 +155,7 @@ class PharController extends Controller
       'A044','A045','A046','A047','A048','A049','A050','A053','A054','A059','A081','A082','A083','A084','A085','A090','A099','K521','K529')      
 			and v.vstdate between '$date1' and '$date2'
       GROUP BY doctor order by atb desc";
+        
         try {
             $rawData = \Yii::$app->db2->createCommand($sql)->queryAll();
         } catch (\yii\db\Exception $e) {

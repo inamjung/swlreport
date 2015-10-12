@@ -120,8 +120,121 @@ class RpstController extends Controller
             'dataProvider'=>$dataProvider,
             'sex'=>$sex,'s1'=>$s1,'s2'=>$s2,'s3'=>$s3,'s4'=>$s4,'s5'=>$s5,
         ]);
-    }  
+    }
     
+    
+    public function actionCvdrisk0() {
+        $date1 = "";
+        $date2 = "";
+        $tmbpart ="";
+        if (Yii::$app->request->isPost) {
+            $date1 = $_POST['date1'];
+            $date2 = $_POST['date2'];
+            $tmbpart = $_POST['tmbpart'];
+        }
+        
+        $sql = "select v.vn,v.hn,concat(pt.pname,pt.fname,' ',pt.lname) ptname,pt.informaddr as adrfull
+            ,pt.tmbpart,pt.moopart,v.vstdate,group_concat(distinct odx.icd10) icd10 
+            ,if(v.sex=1,'ชาย','หญิง') sex,v.age_y as age 
+            ,concat(floor(s.bps),'/',floor(s.bpd)) 'bp' 
+            ,if(s.tc>0,'Y','N') has,s.tc 
+            ,if(s.smoking_type_id=2,'Y','N') smoke 
+            ,if(cm.hn is null,'N','Y') chronic 
+            ,group_concat(distinct if(cm.clinic=001,'DM',if(cm.clinic=002,'HT',null))) NCD 
+            ,(select color from colorchart where has=if(s.tc>0,'Y','N') 
+            and chronic=if(cm.hn is not null,'Y','N') 
+            and sex=v.sex 
+            and age=if(v.age_y>=70,70,if(v.age_y>=60,60,if(v.age_y>=50,50,40))) 
+            and smoke=if(s.smoking_type_id=2,'Y','N') 
+            and bp=if(s.bps>=180,180,if(s.bps>=160,160,if(s.bps>=140,140,120))) 
+            and cholesterol=if(s.tc>=320,320,if(s.tc>=280,280,if(s.tc>=240,240,if(s.tc>=200,200,160)))) limit 1)stage
+
+            from vn_stat v 
+            left join patient pt on pt.hn=v.hn 
+            left join opdscreen s on s.vn=v.vn 
+            join clinicmember cm on v.hn=cm.hn and cm.clinic=001 
+            left join ovstdiag odx on v.vn=odx.vn 
+            where v.vstdate between '$date1' and '$date2'
+            and s.tc>0
+            and pt.tmbpart='$tmbpart' and pt.tmbpart<>''
+            and (odx.icd10 between 'E10' and 'E1499') 
+            group by v.hn order by stage desc ";
+        try {
+            $rawData = \Yii::$app->db2->createCommand($sql)->queryAll();
+        } catch (\yii\db\Exception $e) {
+            throw new \yii\web\ConflictHttpException('sql error');
+        }
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            //'key' => 'hoscode',
+            'allModels' => $rawData,
+            'pagination' =>FALSE
+        ]);
+        return $this->render('cvdrisk0', [
+                    'dataProvider' => $dataProvider,                    
+                    'sql' => $sql,
+                    'rawData'=>$rawData,
+                    'date1' => $date1,
+                    'date2' => $date2,
+                    'tmbpart'=> $tmbpart
+                    
+        ]);
+    }
+    public function actionCvdrisk01() {
+        $date1 = "";
+        $date2 = "";
+        $tmbpart ="";
+        if (Yii::$app->request->isPost) {
+            $date1 = $_POST['date1'];
+            $date2 = $_POST['date2'];
+            $tmbpart = $_POST['tmbpart'];
+        }
+        
+        $sql = "select v.vn,v.hn,concat(pt.pname,pt.fname,' ',pt.lname) ptname,pt.informaddr as adrfull
+            ,pt.tmbpart,pt.moopart,v.vstdate,group_concat(distinct odx.icd10) icd10 
+            ,if(v.sex=1,'ชาย','หญิง') sex,v.age_y as age 
+            ,concat(floor(s.bps),'/',floor(s.bpd)) 'bp' 
+            ,if(s.tc>0,'Y','N') has,s.tc 
+            ,if(s.smoking_type_id=2,'Y','N') smoke 
+            ,if(cm.hn is null,'N','Y') chronic 
+            ,group_concat(distinct if(cm.clinic=001,'DM',if(cm.clinic=002,'HT',null))) NCD 
+            ,(select color from colorchart where has=if(s.tc>0,'Y','N') 
+            and chronic=if(cm.hn is not null,'Y','N') 
+            and sex=v.sex 
+            and age=if(v.age_y>=70,70,if(v.age_y>=60,60,if(v.age_y>=50,50,40))) 
+            and smoke=if(s.smoking_type_id=2,'Y','N') 
+            and bp=if(s.bps>=180,180,if(s.bps>=160,160,if(s.bps>=140,140,120))) 
+            and cholesterol=if(s.tc>=320,320,if(s.tc>=280,280,if(s.tc>=240,240,if(s.tc>=200,200,160)))) limit 1)stage
+
+            from vn_stat v 
+            left join patient pt on pt.hn=v.hn 
+            left join opdscreen s on s.vn=v.vn 
+            join clinicmember cm on v.hn=cm.hn and cm.clinic=002 
+            left join ovstdiag odx on v.vn=odx.vn 
+            where v.vstdate between '$date1' and '$date2'
+            and s.tc>0
+            and pt.tmbpart='$tmbpart' and pt.tmbpart<>''
+            and odx.icd10 ='I10'
+            group by v.hn order by stage desc ";
+        try {
+            $rawData = \Yii::$app->db2->createCommand($sql)->queryAll();
+        } catch (\yii\db\Exception $e) {
+            throw new \yii\web\ConflictHttpException('sql error');
+        }
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            //'key' => 'hoscode',
+            'allModels' => $rawData,
+            'pagination' =>FALSE
+        ]);
+        return $this->render('cvdrisk01', [
+                    'dataProvider' => $dataProvider,                    
+                    'sql' => $sql,
+                    'rawData'=>$rawData,
+                    'date1' => $date1,
+                    'date2' => $date2,
+                    'tmbpart'=> $tmbpart
+                    
+        ]);
+    }
     public function actionOpd(){
         $date1 = "";
         $date2 = "";
@@ -135,6 +248,7 @@ class RpstController extends Controller
         $sql = "select ovst.vstdate,pt.hn,pt.cid,CONCAT(pt.pname,pt.fname,' ',pt.lname) as ptname,ops.cc
             ,ov.pdx,i.name,i.tname,pt.informaddr,pt.hometel,
             pt.addrpart,pt.moopart,pt.tmbpart,ov.hospsub,ov.aid	
+
             FROM vn_stat ov, ovst ovst, patient pt, icd101 i, opdscreen ops
             WHERE pt.hn = ov.hn AND ov.vn = ovst.vn AND i.code = ov.pdx AND ops.vn=ov.vn AND
             ov.vstdate BETWEEN '$date1' AND '$date2' AND  ov.hospsub = '$tmbpart' and ov.pdx != 'B24'
@@ -190,6 +304,50 @@ class RpstController extends Controller
             'pagination' =>FALSE
         ]);
         return $this->render('ipd', [
+                    'dataProvider' => $dataProvider,                    
+                    'sql' => $sql,
+                    'rawData'=>$rawData,
+                    'date1' => $date1,
+                    'date2' => $date2,
+                    'tmbpart'=> $tmbpart
+                    
+        ]);
+    }
+
+    public function actionRefer(){
+        $date1 = "";
+        $date2 = "";
+        $tmbpart ="";
+        if (Yii::$app->request->isPost) {
+            $date1 = $_POST['date1'];
+            $date2 = $_POST['date2'];
+            $tmbpart = $_POST['tmbpart'];
+        }
+        
+        $sql = "select p.hn,p.cid,concat(p.pname,p.fname,' ',p.lname) as full_name ,re.refer_date,re.refer_number,
+                re.refer_point, re.department, re.pdx,icd.name as icdn,icd.tname, re.pttype, p.informaddr,concat(h.hospcode,' : ',
+                h.name)as hospname, pttype.`name` as ptname
+            FROM referout re
+                inner join patient p on p.hn = re.hn
+                inner join hospcode h on h.hospcode = re.refer_hospcode
+                inner join icd101 icd on icd.code=re.pdx
+                INNER JOIN pttype ON pttype.pttype = re.pttype
+                INNER JOIN ovst as o on o.vn = re.vn
+                WHERE re.refer_date BETWEEN '$date1' and '$date2' AND o.hospsub = '$tmbpart' and re.pdx != 'B24'
+                order by refer_date asc"
+                ;
+        try {
+            $rawData = \Yii::$app->db2->createCommand($sql)->queryAll();
+        } catch (\yii\db\Exception $e) {
+            throw new \yii\web\ConflictHttpException('sql error');
+        }
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            //'key' => 'hoscode',
+            'allModels' => $rawData,
+            'pagination' =>FALSE,
+            //'pagination'=>['pagesize'=>15]
+        ]);
+        return $this->render('refer', [
                     'dataProvider' => $dataProvider,                    
                     'sql' => $sql,
                     'rawData'=>$rawData,

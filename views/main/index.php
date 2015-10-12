@@ -82,6 +82,12 @@ use yii\helpers\Url;
                                 <td><span class="label label-info">ER</span></td>
                                 
                             </tr>
+                            <tr>
+                                <td><a href="<?php echo Url::to(['strokemi/index']); ?>">5) หมวด -หลอดเลือดสมอง/หัวใจ</a></td>
+                                <td></td>
+                                <td><span class="label label-info">Stroke & Mi</span></td>
+                                
+                            </tr>
                             
                         </tbody>
                     </table>
@@ -117,19 +123,19 @@ use yii\helpers\Url;
                                 <td><span class="label label-success">IPD</span></td>                                
                             </tr>
                             <tr>
-                                <td><a href="<?php echo Url::to(['asthma/index']); ?>">2) หมวด -รายงานASTHMA/COPD</a></td>
+                                <td><a href="<?php echo Url::to(['asthma/index']); ?>">6) หมวด -รายงานASTHMA/COPD</a></td>
                                 <td></td>
                                 <td><span class="label label-warning">ASTHMA/COPD</span></td> 
                                 
                             </tr>
                             <tr>
-                                <td><a href="<?php echo Url::to(['ttm/index']); ?>">3) หมวด -รายงานแผนไทย+กายภาพ</a></td>
+                                <td><a href="<?php echo Url::to(['ttm/index']); ?>">7) หมวด -รายงานแผนไทย+กายภาพ</a></td>
                                 <td></td>
                                 <td><span class="label label-danger">TTM</span></td>
                                 
                             </tr>
                             <tr>
-                                <td><a href="<?php echo Url::to(['dent/index']); ?>">4) หมวด -รายงานทันตกรรม</a></td>
+                                <td><a href="<?php echo Url::to(['dent/index']); ?>">8) หมวด -รายงานทันตกรรม</a></td>
                                 <td></td>
                                 <td><span class="label label-info">DENTAL</span></td>
                                 

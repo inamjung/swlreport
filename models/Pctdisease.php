@@ -72,4 +72,7 @@ class Pctdisease extends \yii\db\ActiveRecord
             'hos_guid_ext' => 'Hos Guid Ext',
         ];
     }
+    public function getHospctclinicvisit(){
+        return $this->hasMany(Hospctclinicvisit::className(), ['icd10'=>'code']);
+    }
 }

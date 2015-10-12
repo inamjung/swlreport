@@ -36,7 +36,9 @@
         "yurkinx/yii2-image": "dev-master",
         "2amigos/yii2-google-maps-library": "*",
         "2amigos/yii2-google-places-library": "*",
-        "dixonsatit/yii2-thai-year-formatter": "0.9.6"
+        "dixonsatit/yii2-thai-year-formatter": "0.9.6",
+        "kartik-v/yii2-checkbox-x": "*",
+        "wbraganca/yii2-dynamicform": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

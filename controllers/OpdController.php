@@ -474,5 +474,63 @@ class OpdController extends Controller
             'dece'=>$dece,
         ]);
     }
+    
+    public function actionWaitnolabx(){
+        
+        $date1 = "";
+        $date2 = "";    
+        if (Yii::$app->request->isPost) {
+            $date1 = $_POST['date1'];
+            $date2 = $_POST['date2'];
+        }
+        $sql = "select s.hn, s.vstdate, s.vsttime, s.service3 as sendpt2screen, s.service4 as startscreen ,
+        s.service11 as send2doctor, s.service5 as startexam,s.service12 as finishexam,s.service8 as startadmit,
+        sec_to_time(time_to_sec(service4)-time_to_sec(service3)) as waitforscreen,
+        time_to_sec(service4)-time_to_sec(service3) as waitforscreen2,
+        sec_to_time(time_to_sec(service11)-time_to_sec(service4)) as timetoscreen,
+        time_to_sec(service11)-time_to_sec(service4) as timetoscreen2,
+        sec_to_time(time_to_sec(service5)-time_to_sec(service11)) as waitforexamine,
+        time_to_sec(service5)-time_to_sec(service11) as waitforexamine2,
+        sec_to_time(time_to_sec(service12)-time_to_sec(service5)) as timetoexamine,
+        time_to_sec(service12)-time_to_sec(service5) as timetoexamine2,
+        sec_to_time(time_to_sec(service12)-time_to_sec(service3)) as timefromvsttime2finishexam,
+        time_to_sec(service12)-time_to_sec(service3) as timefromvsttime2finishexam2,
+        sec_to_time(time_to_sec(service8)-time_to_sec(service3)) as timefromvsttime2startadmit,
+        time_to_sec(service8)-time_to_sec(service3) as timefromvsttime2startadmit2
+        from service_time s
+        where s.vstdate between '$date1' and '$date2'
+        and s.service3 is not null and s.service4 is not null and
+        s.service5 is not null and s.service11 is not null and s.service12 is not null and s.service8 is null and
+        s.service3 >= '08:00:00' and s.service12 <='16:00:00' and
+        s.service11>=s.service4 and s.service5>=s.service11 and s.service12>=s.service5
+        and  vn not in (select vn from lab_order_service union select vn from xray_head)
+        and s.vstdate not in (select holiday_date from holiday) ";
+        
+        try {
+            $rawData = \Yii::$app->db2->createCommand($sql)->queryAll();
+        } catch (\yii\db\Exception $e) {
+            throw new \yii\web\ConflictHttpException('sql error');
+        }        
+           
+//        for($i=0;$i<sizeof($sql);$i++){
+//             $tambonname[] = $sql[$i]['tambonname'];
+//             $total[] = $sql[$i]['total']*1;
+//             
+//         }
+         
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            //'key' => 'ampurname',
+            'allModels' => $rawData,
+            'pagination' =>false,
+            
+        ]);
+        Yii::$app->session->setFlash('info', 'ระยะเวลารอคอย OPD ในเวลาราชการ ไม่มีLab/Xray !');
+        return $this->render('waitnolabx', [
+                    'dataProvider' => $dataProvider,
+                    'sql' => $sql,
+                    'date1' => $date1,
+                    'date2' => $date2,
+        ]);
+    }
 }
 

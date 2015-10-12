@@ -150,7 +150,7 @@ $this->registerJs("$(function () {
 		  <a href="<?php echo Url::to(['asthma/asthma1']); ?>" class="list-group-item">1) จำนวนผู้ป่วย Asthma และ COPD ที่refer</a>
 		  <a href="<?php echo Url::to(['asthma/asthma2']); ?>" class="list-group-item">2) จำนวนผู้ป่วย Asthma และ COPD ที่พ่นยาห้องฉุกเฉิน</a>
 		 
-		  <a href="<?php echo Url::to(['asthma/asthma3']); ?>" class="list-group-item">2) จำนวนผู้ป่วย Asthma และ COPD ที่นอนโรงพยาบาล</a>
+		  <a href="<?php echo Url::to(['asthma/asthma3']); ?>" class="list-group-item">3) จำนวนผู้ป่วย Asthma และ COPD ที่นอนโรงพยาบาล</a>
 		</div>
 	
 	</div>

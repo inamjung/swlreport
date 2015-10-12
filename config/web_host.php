@@ -56,6 +56,9 @@ $config = [
         ],
     ],
     'modules' => [
+        'pctclinic' => [
+            'class' => 'app\modules\pctclinic\Module',
+        ],
         'dynagrid' => [
             'class' => '\kartik\dynagrid\Module',
              ],

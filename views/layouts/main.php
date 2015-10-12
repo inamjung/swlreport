@@ -9,9 +9,12 @@ use app\assets\AppAsset;
 /* @var $content string */
 
 AppAsset::register($this);
+//app\assets\MaterialAsset::register($this);
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
+
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
@@ -20,6 +23,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+
 <body>
 
 <?php $this->beginBody() ?>
@@ -54,17 +58,40 @@ AppAsset::register($this);
                     
                    ['label' => 'REPORT-HOSxP', 'url' => ['main/index'], 'visible' => !Yii::$app->user->isGuest],
                     
+                   	Yii::$app->user->isGuest ?
+                    
+                    ['label' => '', 'url' => ['#']] :
+                  
+                    ['label' => 'DPAC', 'items'=>[
+                        ['label' => 'รายชื่อผู้ป่วยในทะเบียน', 'url' => ['/dpac/dpacdetails/index']],
+                        ['label' => 'ลงทะเบียนรายใหม่ ', 'url' => ['/dpac/pct-all-visit/index']],
+                        '<li class="divider"></li>',
+                        //'<li class="dropdown-header"><i class="glyphicon glyphicon-cog"></i> รพ.แม่ข่าย(กลุ่มเสี่ยง)</li>',
+                        //['label' => 'ตั้งค่าหมู่บ้าน', 'url' => ['/pctclinic/pctmooban/index']],
+                        //['label' => 'ตั้งค่ายา', 'url' => ['pctdrug/index']],
+                        ['label'=>'รับเคสเข้าระบบ', 'url'=>['#']],
+
+                        ]],
+
                     Yii::$app->user->isGuest ?
                     
                     ['label' => '', 'url' => ['#']] :
                   
                     ['label' => 'STOKE&MI', 'items'=>[
-                        ['label' => 'รายชื่อผู้ป่วยในทะเบียน', 'url' => ['pctpatient/index']],
-                        ['label' => 'ลงทะเบียนรายใหม่ ', 'url' => ['pctpatient/create']],
+                        ['label' => 'รายชื่อผู้ป่วยในทะเบียน', 'url' => ['/pctclinic/pctpatient/index']],
+                        ['label' => 'ลงทะเบียนรายใหม่ ', 'url' => ['/pctclinic/pctpatient/create']],
                         '<li class="divider"></li>',
-                        '<li class="dropdown-header"><i class="glyphicon glyphicon-cog"></i> การตั้งค่า</li>',
-                        ['label' => 'ตั้งค่าหมู่บ้าน', 'url' => ['pctmooban/index']],
-                        ['label' => 'ตั้งค่ายา', 'url' => ['pctdrug/index']],        
+                        '<li class="dropdown-header"><i class="glyphicon glyphicon-cog"></i> รพ.แม่ข่าย(กลุ่มเสี่ยง)</li>',
+                        //['label' => 'ตั้งค่าหมู่บ้าน', 'url' => ['/pctclinic/pctmooban/index']],
+                        //['label' => 'ตั้งค่ายา', 'url' => ['pctdrug/index']],
+                        ['label'=>'รับเคสเข้าระบบ', 'url'=>['/pctclinic/pct-clinic-visit/indexhosconfirm']],
+                        ['label' => 'ส่งเคสไป รพ.สต', 'url' => ['/pctclinic/pct-risk/index']],
+                        ['label' => 'ติดตามเคส', 'url' => ['/pctclinic/pct-risk/indexview']],
+                        '<li class="divider"></li>',
+                        '<li class="dropdown-header"><i class="glyphicon glyphicon-cog"></i> รพ.สต(กลุ่มเสี่ยง)</li>',
+                        ['label'=>'รับเยี่ยมเคส', 'url'=>['/pctclinic/pct-risk-care/index']],
+                        
+                        
                         //['label' => 'Logout', 'url' => ['/user/security/logout'],'linkOptions' => ['data-method' => 'post']],
                       
                          ]],
